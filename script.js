@@ -3,12 +3,13 @@ let currentPage = 1;
 let productsPerPage = 4;
 let sortOption = "asc";
 let category = null;
+let searchQueryString = "";
 
 const fetchProducts = (page = 1, sort = "asc", category = null) => {
   renderLoader(true);
-  let url = `${apiUrl}?page=${page}&limit=${productsPerPage}&sort=${sort}`;
+  let url = `${apiUrl}?page=${page}&limit=${productsPerPage}&sort=${sort}&search=${searchQueryString}`;
   if (category !== null) {
-    url = `${apiUrl}/category/${category}?sort=${sort}`;
+    url = `${apiUrl}/category/${category}?sort=${sort}&search=${searchQueryString}`;
   }
   fetch(url)
     .then((response) => response.json())
@@ -95,4 +96,11 @@ const handleCheckbox = (e) => {
 
 const toggleMenu = (x) => {
   x.classList.toggle("change");
+};
+
+const searchProductsHandler = (e) => {
+  searchQueryString = e?.value ?? "";
+
+  // TODO : add a throttle/debouncer to control api calls
+  fetchProducts(0, "asc", category, e.value ?? "");
 };

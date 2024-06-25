@@ -92,8 +92,10 @@ header nav ul li a {
   float: right;
 }
 
-.sort-options {
-  margin: 1rem;
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .product-list {
